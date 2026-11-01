@@ -8,16 +8,16 @@ import { brand } from "@/lib/data/profile"
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kryoforge.vercel.app"
 
 export const metadata: Metadata = {
-  title: "Contact Research Studio | Discuss Your Paper or Model",
+  title: "Contact & Implementation Request",
   description:
-    "Send us your reference paper, draft algorithm formulation, or reviewer comments. KryoForge delivers verified NS-3 simulations, NetAnim traces, and 300 DPI publication plots.",
+    "Submit your research paper, draft algorithm models, or reviewer revision requests. KryoForge delivers verified NS-3 simulations and 300 DPI publication plots.",
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact KryoForge Research Studio | Simulation & Algorithm Engineering",
+    title: "Contact & Implementation Request | KryoForge",
     description:
-      "Discuss your research paper, NS-3 simulation models, or target journal benchmarks with KryoForge. 24-hour feasibility review.",
+      "Submit your research paper, draft algorithm models, or reviewer revision requests. KryoForge delivers verified NS-3 simulations and 300 DPI publication plots.",
     url: `${siteUrl}/contact`,
     type: "website",
     images: [
@@ -31,8 +31,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact KryoForge Research Studio",
-    description: "Discuss your research paper, NS-3 simulation models, or target journal benchmarks.",
+    title: "Contact & Implementation Request | KryoForge",
+    description:
+      "Submit your research paper, draft algorithm models, or reviewer revision requests. KryoForge delivers verified NS-3 simulations and 300 DPI publication plots.",
     images: ["/og-image.png"],
   },
 }

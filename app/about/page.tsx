@@ -14,16 +14,16 @@ import { brand, heroStats } from "@/lib/data/profile"
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kryoforge.vercel.app"
 
 export const metadata: Metadata = {
-  title: "About Us — Computational Research & Simulation Engineering",
+  title: "About the Research Studio",
   description:
-    "KryoForge is an elite research engineering studio executing custom NS-3 simulations, quantum algorithms, and deep spiking networks for IEEE, Springer, and Elsevier papers.",
+    "KryoForge is a computational research engineering studio delivering verified NS-3 simulations, mathematical models, and 300 DPI figures for journal papers.",
   alternates: {
     canonical: "/about",
   },
   openGraph: {
     title: "About KryoForge Research Studio",
     description:
-      "Turning complex research models into verified, publishable simulation results. Custom C++ NS-3 protocols, NetAnim topologies, and 300 DPI publication plots.",
+      "KryoForge is a computational research engineering studio delivering verified NS-3 simulations, mathematical models, and 300 DPI figures for journal papers.",
     url: `${siteUrl}/about`,
     type: "website",
   },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "About KryoForge Research Studio",
     description:
-      "Turning complex research models into verified, publishable simulation results. Custom C++ NS-3 protocols, NetAnim topologies, and 300 DPI publication plots.",
+      "KryoForge is a computational research engineering studio delivering verified NS-3 simulations, mathematical models, and 300 DPI figures for journal papers.",
   },
 }
 

@@ -11,24 +11,24 @@ import { caseStudies } from "@/lib/data/projects"
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kryoforge.vercel.app"
 
 export const metadata: Metadata = {
-  title: "Research Portfolio & Simulation Benchmarks",
+  title: "Simulation Benchmarks & Research",
   description:
-    "Verified academic NS-3 simulation models, NetAnim topologies, and 300 DPI publication plots across IoT, RPL routing, VANET, Zero-Trust defense, Swin-SNN, and quantum VQE circuits.",
+    "Explore verified NS-3 simulations, NetAnim topologies, and 300 DPI publication plots across IoT, VANET, RPL routing, Zero-Trust defense, and quantum circuits.",
   alternates: {
     canonical: "/research",
   },
   openGraph: {
-    title: "Research Portfolio & Simulation Benchmarks | KryoForge",
+    title: "Simulation Benchmarks & Research | KryoForge",
     description:
-      "Explore verified NS-3 simulations, NetAnim topologies, and 300 DPI publication plots engineered for IEEE, Springer, and Elsevier research workflows.",
+      "Explore verified NS-3 simulations, NetAnim topologies, and 300 DPI publication plots across IoT, VANET, RPL routing, Zero-Trust defense, and quantum circuits.",
     url: `${siteUrl}/research`,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Research Portfolio & Simulation Benchmarks | KryoForge",
+    title: "Simulation Benchmarks & Research | KryoForge",
     description:
-      "Explore verified NS-3 simulations, NetAnim topologies, and 300 DPI publication plots engineered for IEEE, Springer, and Elsevier research workflows.",
+      "Explore verified NS-3 simulations, NetAnim topologies, and 300 DPI publication plots across IoT, VANET, RPL routing, Zero-Trust defense, and quantum circuits.",
   },
 }
 

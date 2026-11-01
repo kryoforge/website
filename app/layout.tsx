@@ -26,11 +26,11 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   title: {
-    default: `${brand.fullName} | ${brand.tagline}`,
+    default: "KryoForge | Network Simulation & Research Engineering",
     template: `%s | ${brand.name}`,
   },
   description:
-    "KryoForge designs and executes custom NS-3 network architectures, deep learning pipelines, and quantum algorithms for IEEE, Springer, and Elsevier research workflows—delivering verified metrics, NetAnim topologies, and 300 DPI publication-ready plots.",
+    "Custom NS-3 network simulations, deep learning pipelines, and quantum algorithms for IEEE, Springer, and Elsevier papers. Verified metrics and 300 DPI plots.",
   keywords: [
     "NS-3 simulation",
     "ns-3.46.1",
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.webmanifest",
   openGraph: {
-    title: `${brand.fullName} | ${brand.tagline}`,
+    title: "KryoForge | Network Simulation & Research Engineering",
     description:
-      "Turning complex research models into publishable simulation results. Custom NS-3 network engineering, quantum algorithms, and 300 DPI publication-ready figures.",
+      "Custom NS-3 network simulations, deep learning pipelines, and quantum algorithms for IEEE, Springer, and Elsevier papers. Verified metrics and 300 DPI plots.",
     url: siteUrl,
     type: "website",
     locale: "en_US",
@@ -90,9 +90,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${brand.fullName} | ${brand.tagline}`,
+    title: "KryoForge | Network Simulation & Research Engineering",
     description:
-      "Turning complex research models into publishable simulation results. Custom NS-3 network engineering, quantum algorithms, and 300 DPI publication-ready figures.",
+      "Custom NS-3 network simulations, deep learning pipelines, and quantum algorithms for IEEE, Springer, and Elsevier papers. Verified metrics and 300 DPI plots.",
     images: ["/og-image.png"],
   },
   robots: {

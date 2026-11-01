@@ -22,7 +22,7 @@ export default function robots(): MetadataRoute.Robots {
           "Applebot",
           "CCBot",
         ],
-        allow: ["/", "/contact", "/llms.txt", "/llms-full.txt"],
+        allow: "/",
         disallow: ["/api/"],
       },
     ],
