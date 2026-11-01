@@ -67,7 +67,7 @@ export function Hero() {
               <ArrowRight aria-hidden="true" className="size-4 transition-transform duration-200 group-hover/hero-cta:translate-x-1" />
             </a>
             <a
-              href="/#portfolio"
+              href="/research"
               className="group/hero-work inline-flex items-center justify-center gap-2.5 rounded-full border border-slate-900/10 bg-white/90 px-6 py-3.5 text-sm font-bold text-slate-900 shadow-[0_4px_16px_-2px_rgba(0,0,0,0.06),inset_0_1.5px_1px_rgba(255,255,255,0.85),inset_0_-2px_5px_rgba(0,0,0,0.05)] backdrop-blur-md transition-all duration-200 hover:bg-white hover:border-primary/40 hover:scale-[1.03] hover:text-primary active:scale-[0.97] dark:border-white/15 dark:bg-slate-900/80 dark:text-white dark:hover:bg-slate-800/90"
             >
               <span>Explore Simulation Benchmarks</span>

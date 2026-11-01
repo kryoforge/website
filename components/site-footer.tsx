@@ -27,27 +27,11 @@ export function SiteFooter() {
     if (href === "/" && pathname === "/") {
       e.preventDefault()
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-      if (window.location.hash) {
-        window.history.replaceState(null, "", "/")
-      }
-    } else if (href.includes("#")) {
-      const [targetPath, hash] = href.split("#")
-      const currentPathNormalized = pathname === "" ? "/" : pathname
-      const targetNormalized = targetPath === "" ? "/" : targetPath
-
-      if (currentPathNormalized === targetNormalized) {
-        e.preventDefault()
-        const el = document.getElementById(hash)
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" })
-          window.history.replaceState(null, "", href)
-        }
-      }
     }
   }
 
   return (
-    <footer className="relative z-10 px-4 pb-8 pt-16 md:pt-20">
+    <footer className="relative z-10 px-4 pb-4 pt-14 md:pt-18">
       <div className="glass relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] p-8 md:p-12">
         <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 -right-16 size-72 rounded-full bg-violet-600/20 blur-3xl" />
         <div aria-hidden="true" className="pointer-events-none absolute -left-16 -top-24 size-64 rounded-full bg-sky-500/15 blur-3xl" />

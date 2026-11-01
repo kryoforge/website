@@ -24,9 +24,8 @@ export const brand = {
 
 export const navLinks: Array<{ href: string; label: string }> = [
   { href: "/", label: "Home" },
-  { href: "/#capabilities", label: "Capabilities" },
-  { href: "/#portfolio", label: "Portfolio" },
-  { href: "/#pricing", label: "Pricing" },
+  { href: "/research", label: "Research" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ]
 

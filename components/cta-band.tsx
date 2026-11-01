@@ -1,4 +1,4 @@
-import { Mail, ShieldCheck } from "lucide-react"
+import { ShieldCheck } from "lucide-react"
 import { CtaLink } from "@/components/cta-button"
 import { Reveal } from "@/components/reveal"
 import { brand } from "@/lib/data/profile"
@@ -37,22 +37,13 @@ export function CtaBand() {
             Send us your base paper, draft mathematical models, or reviewer revision requirements. We deliver verified ns-3.46.1 C++ code, CSV datasets, NetAnim traces, and 300 DPI publication plots.
           </p>
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3.5">
+          <div className="mt-8 flex justify-center">
             <CtaLink
               href="/contact"
               size="lg"
               className="bg-gradient-to-r from-[#2563eb] via-[#7c3aed] to-[#ec4899] text-white font-bold shadow-lg hover:scale-[1.03] active:scale-[0.97]"
             >
               Discuss Your Paper / Base Model
-            </CtaLink>
-            <CtaLink
-              href={`mailto:${brand.email}`}
-              size="lg"
-              arrow={false}
-              icon={<Mail aria-hidden="true" className="size-4.5 text-white dark:text-cyan-400 shrink-0" />}
-              className="bg-slate-900 hover:bg-slate-950 text-white border border-slate-800 shadow-md backdrop-blur-md hover:scale-[1.03] active:scale-[0.97]"
-            >
-              <span className="font-bold text-white">{brand.email}</span>
             </CtaLink>
           </div>
         </div>

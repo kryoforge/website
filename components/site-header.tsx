@@ -5,21 +5,15 @@ import { ArrowRight, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { CtaLink } from "@/components/cta-button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { brand, navLinks } from "@/lib/data/profile"
 import { cn } from "@/lib/utils"
 
-function isLinkActive(href: string, activeSection: string, pathname: string) {
-  if (pathname === "/contact") {
-    return href === "/contact"
-  }
-  if (activeSection) {
-    return href === activeSection
-  }
+function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/"
-  return false
+  return pathname.startsWith(href)
 }
 
 export function Brand() {
@@ -99,9 +93,6 @@ export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState<string>("")
-  const isClickScrolling = useRef(false)
-  const clickScrollTimer = useRef<NodeJS.Timeout | null>(null)
 
   const isHome = pathname === "/"
 
@@ -109,147 +100,13 @@ export function SiteHeader() {
     setOpen(false)
   }, [pathname])
 
-  useEffect(() => {
-    return () => {
-      if (clickScrollTimer.current) {
-        clearTimeout(clickScrollTimer.current)
-      }
-    }
-  }, [])
-
-  // Scroll spy to sync active section on desktop and mobile in exact DOM order
-  useEffect(() => {
-    if (pathname === "/contact") {
-      setActiveSection("/contact")
-      return
-    }
-
-    if (pathname !== "/") {
-      setActiveSection("")
-      return
-    }
-
-    // The core section destinations represented in the navbar
-    const orderedSectionIds = ["capabilities", "portfolio", "pricing"]
-
-    const computeActiveSection = () => {
-      if (isClickScrolling.current) return
-
-      const scrollY = window.scrollY
-
-      // If at or near the top hero, always keep Home active
-      if (scrollY < 180) {
-        setActiveSection("/")
-        return
-      }
-
-      // Target reference line: 150px from top of viewport (below fixed navbar with comfortable offset)
-      const targetLine = 150
-      let active = "/"
-
-      for (const id of orderedSectionIds) {
-        const el = document.getElementById(id)
-        if (!el) continue
-        const rect = el.getBoundingClientRect()
-        // If section top has scrolled past or reached the target line, it is the active section
-        if (rect.top <= targetLine) {
-          active = `/#${id}`
-        }
-      }
-
-      setActiveSection(active)
-    }
-
-    let ticking = false
-    const onScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          computeActiveSection()
-          ticking = false
-        })
-        ticking = true
-      }
-    }
-
-    // Run on initial mount
-    computeActiveSection()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", onScroll, { passive: true })
-
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", onScroll)
-    }
-  }, [pathname])
-
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href === "/" && pathname === "/") {
       e.preventDefault()
-      setActiveSection("/")
-      isClickScrolling.current = true
-      if (clickScrollTimer.current) clearTimeout(clickScrollTimer.current)
-      clickScrollTimer.current = setTimeout(() => {
-        isClickScrolling.current = false
-      }, 850)
-
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
-      if (window.location.hash) {
-        window.history.replaceState(null, "", "/")
-      }
-    } else if (href.includes("#")) {
-      const [targetPath, hash] = href.split("#")
-      const currentPathNormalized = pathname === "" ? "/" : pathname
-      const targetNormalized = targetPath === "" ? "/" : targetPath
-
-      if (currentPathNormalized === targetNormalized) {
-        e.preventDefault()
-        const el = document.getElementById(hash)
-        if (el) {
-          // Immediately set the active section so the tab pill highlights the clicked section without flicker or lag
-          setActiveSection(href)
-          isClickScrolling.current = true
-          if (clickScrollTimer.current) clearTimeout(clickScrollTimer.current)
-          clickScrollTimer.current = setTimeout(() => {
-            isClickScrolling.current = false
-          }, 850)
-
-          el.scrollIntoView({ behavior: "smooth" })
-          window.history.replaceState(null, "", href)
-        }
-      }
     }
     setOpen(false)
   }
-
-  // Ensure fresh loads always start at the Hero; only scroll if a deliberate hash was provided
-  useEffect(() => {
-    if (typeof window === "undefined") return
-
-    // Prevent browser from restoring arbitrary scrolled position from previous visits
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual"
-    }
-
-    const rawHash = window.location.hash ? window.location.hash.replace("#", "") : ""
-
-    if (pathname === "/") {
-      if (!rawHash) {
-        // Fresh landing on home page without hash - stay firmly at top hero
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" })
-        setActiveSection("/")
-      } else {
-        // Explicit hash present
-        const el = document.getElementById(rawHash)
-        if (el) {
-          setActiveSection(`/#${rawHash}`)
-          const timer = setTimeout(() => {
-            el.scrollIntoView({ behavior: "smooth" })
-          }, 150)
-          return () => clearTimeout(timer)
-        }
-      }
-    }
-  }, [pathname])
 
   useEffect(() => {
     let ticking = false
@@ -290,7 +147,7 @@ export function SiteHeader() {
         <nav aria-label="Primary" className="glass hidden rounded-full p-1.5 md:block">
           <ul className="flex items-center gap-1">
             {navLinks.map((l) => {
-              const active = isLinkActive(l.href, activeSection, pathname)
+              const active = isActive(pathname, l.href)
               return (
                 <li key={l.href}>
                   <Link
@@ -362,7 +219,7 @@ export function SiteHeader() {
             />
             <motion.ul className="flex flex-col gap-1">
               {navLinks.map((l) => {
-                const active = isLinkActive(l.href, activeSection, pathname)
+                const active = isActive(pathname, l.href)
                 return (
                   <motion.li key={l.href} variants={paperItemVariants}>
                     <Link
