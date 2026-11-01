@@ -24,7 +24,13 @@ export function SiteFooter() {
   const pathname = usePathname()
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.includes("#")) {
+    if (href === "/" && pathname === "/") {
+      e.preventDefault()
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+      if (window.location.hash) {
+        window.history.replaceState(null, "", "/")
+      }
+    } else if (href.includes("#")) {
       const [targetPath, hash] = href.split("#")
       const currentPathNormalized = pathname === "" ? "/" : pathname
       const targetNormalized = targetPath === "" ? "/" : targetPath
@@ -34,7 +40,7 @@ export function SiteFooter() {
         const el = document.getElementById(hash)
         if (el) {
           el.scrollIntoView({ behavior: "smooth" })
-          window.history.pushState(null, "", href)
+          window.history.replaceState(null, "", href)
         }
       }
     }

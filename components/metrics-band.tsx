@@ -19,7 +19,7 @@ const researchMetrics = [
   {
     value: "300 DPI",
     label: "Academic Figures",
-    note: "High-resolution serif serif plots (IEEE format)",
+    note: "High-resolution serif plots (IEEE / Springer format)",
     icon: Activity,
     color: "bg-purple-50 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400",
   },

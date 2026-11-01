@@ -11,7 +11,7 @@ type Status = "idle" | "submitting" | "ready" | "error"
 type Errors = Partial<Record<ContactField, string>>
 
 const fieldClass =
-  "w-full rounded-2xl border border-input bg-white/70 px-4 py-3 text-sm sm:text-base shadow-inner outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/20 dark:bg-white/5 aria-[invalid=true]:border-destructive"
+  "w-full min-w-0 max-w-full rounded-2xl border border-input bg-white/70 px-4 py-3 text-sm sm:text-base shadow-inner outline-none transition focus:border-ring focus:ring-4 focus:ring-ring/20 dark:bg-white/5 aria-[invalid=true]:border-destructive"
 
 function composeMessage(v: ContactInput) {
   return `Dear KryoForge Research Studio,\n\nSpecialization: ${v.projectType}\nBase Paper / Ref: ${v.paperTitle || "None specified"}\n\nProblem Statement & Target Metrics:\n${v.message}\n\nResearcher: ${v.name}\nContact Email: ${v.email}`
@@ -125,7 +125,7 @@ export function ContactForm() {
 
     if (delivered) {
       return (
-        <div className="glass rounded-[2.25rem] p-8 md:p-10" role="status">
+        <div className="glass rounded-[2rem] sm:rounded-[2.25rem] p-5 sm:p-8 md:p-10 w-full min-w-0 max-w-full overflow-hidden" role="status">
           <span className="flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#0ea5a4] text-white shadow-lg">
             <Check aria-hidden="true" className="size-7" />
           </span>
@@ -153,7 +153,7 @@ export function ContactForm() {
     }
 
     return (
-      <div className="glass rounded-[2.25rem] p-8 md:p-10" role="status">
+      <div className="glass rounded-[2rem] sm:rounded-[2.25rem] p-5 sm:p-8 md:p-10 w-full min-w-0 max-w-full overflow-hidden" role="status">
         <span className="flex size-14 items-center justify-center rounded-full bg-gradient-to-br from-[#10b981] to-[#0ea5a4] text-white shadow-lg">
           <Check aria-hidden="true" className="size-7" />
         </span>
@@ -189,7 +189,7 @@ export function ContactForm() {
 
   const err = (k: ContactField) => errors[k]
   return (
-    <form onSubmit={onSubmit} noValidate className="glass space-y-5 rounded-[2.25rem] p-7 md:p-9">
+    <form onSubmit={onSubmit} noValidate className="glass space-y-5 rounded-[2rem] sm:rounded-[2.25rem] p-5 sm:p-7 md:p-9 w-full min-w-0 max-w-full overflow-hidden">
       <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
       <div className="grid gap-5 sm:grid-cols-2">

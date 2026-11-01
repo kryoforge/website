@@ -96,7 +96,7 @@ export default function ContactPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(contactSchema) }}
       />
-      <section className="px-4 pt-14 pb-16">
+      <section className="px-4 pt-24 sm:pt-28 pb-16">
         <div className="mx-auto max-w-7xl">
           <SectionHeading
             as="h1"
@@ -109,18 +109,18 @@ export default function ContactPage() {
             description="Share your base paper, problem statement, or target metrics. We evaluate mathematical feasibility and simulator requirements within 24 hours."
           />
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-[1.3fr_1fr]">
-            <Reveal>
+          <div className="mt-12 grid gap-8 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] w-full min-w-0 max-w-full">
+            <Reveal className="w-full min-w-0 max-w-full">
               <ContactForm />
             </Reveal>
 
-            <Reveal delay={0.1} className="space-y-4">
-              <div className="glass rounded-3xl p-6 space-y-4">
+            <Reveal delay={0.1} className="w-full min-w-0 max-w-full space-y-4">
+              <div className="glass rounded-3xl p-5 sm:p-6 space-y-4 w-full min-w-0 max-w-full overflow-hidden">
                 <div className="flex items-center gap-3">
                   <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2563eb] to-[#7c3aed] text-white shadow-md">
                     <Mail className="size-5" />
                   </div>
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <span className="eyebrow block !text-[0.62rem] !text-muted-foreground">Direct Simulation Handle</span>
                     <a
                       href={`mailto:${brand.email}`}
@@ -136,7 +136,7 @@ export default function ContactPage() {
                     <div className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-md dark:bg-white/10">
                       <GithubIcon className="size-5" />
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <span className="eyebrow block !text-[0.62rem] !text-muted-foreground">GitHub Organization</span>
                       <a
                         href={brand.github}
@@ -166,7 +166,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="glass rounded-3xl p-6 text-xs sm:text-sm text-muted-foreground space-y-2">
+              <div className="glass rounded-3xl p-5 sm:p-6 text-xs sm:text-sm text-muted-foreground space-y-2 w-full min-w-0 max-w-full">
                 <h2 className="font-bold text-slate-900 dark:text-white">
                   What happens after you reach out?
                 </h2>

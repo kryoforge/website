@@ -11,16 +11,31 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { brand, navLinks } from "@/lib/data/profile"
 import { cn } from "@/lib/utils"
 
-function isActive(pathname: string, href: string) {
+function isLinkActive(href: string, activeSection: string, pathname: string) {
+  if (pathname === "/contact") {
+    return href === "/contact"
+  }
+  if (activeSection) {
+    return href === activeSection
+  }
   if (href === "/") return pathname === "/"
-  if (href.includes("#")) return false
-  return pathname.startsWith(href)
+  return false
 }
 
 export function Brand() {
+  const pathname = usePathname()
   return (
     <Link
       href="/"
+      onClick={(e) => {
+        if (pathname === "/") {
+          e.preventDefault()
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+          if (window.location.hash) {
+            window.history.replaceState(null, "", "/")
+          }
+        }
+      }}
       className="group flex items-center gap-2.5 transition-opacity hover:opacity-95 shrink-0"
       aria-label="KryoForge Research Studio, home"
     >
@@ -84,6 +99,7 @@ export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [activeSection, setActiveSection] = useState<string>("")
 
   const isHome = pathname === "/"
 
@@ -91,8 +107,69 @@ export function SiteHeader() {
     setOpen(false)
   }, [pathname])
 
+  // Scroll spy to sync active section on desktop and mobile
+  useEffect(() => {
+    if (pathname === "/contact") {
+      setActiveSection("/contact")
+      return
+    }
+
+    if (pathname !== "/") {
+      setActiveSection("")
+      return
+    }
+
+    const sectionIds = ["portfolio", "capabilities", "methodology", "pricing", "faq"]
+    const sections = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null)
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (window.scrollY < 200) {
+          setActiveSection("/")
+          return
+        }
+        const visible = entries.filter((e) => e.isIntersecting)
+        if (visible.length > 0) {
+          const best = visible.reduce((prev, curr) =>
+            curr.intersectionRatio > prev.intersectionRatio ? curr : prev,
+          )
+          setActiveSection(`/#${best.target.id}`)
+        } else if (window.scrollY < 200) {
+          setActiveSection("/")
+        }
+      },
+      {
+        rootMargin: "-90px 0px -40% 0px",
+        threshold: [0, 0.25, 0.5, 0.75],
+      },
+    )
+
+    sections.forEach((sec) => observer.observe(sec))
+
+    const handleScrollTop = () => {
+      if (window.scrollY < 200) {
+        setActiveSection("/")
+      }
+    }
+    window.addEventListener("scroll", handleScrollTop, { passive: true })
+
+    return () => {
+      sections.forEach((sec) => observer.unobserve(sec))
+      window.removeEventListener("scroll", handleScrollTop)
+    }
+  }, [pathname])
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.includes("#")) {
+    if (href === "/" && pathname === "/") {
+      e.preventDefault()
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
+      if (window.location.hash) {
+        window.history.replaceState(null, "", "/")
+      }
+      setActiveSection("/")
+    } else if (href.includes("#")) {
       const [targetPath, hash] = href.split("#")
       const currentPathNormalized = pathname === "" ? "/" : pathname
       const targetNormalized = targetPath === "" ? "/" : targetPath
@@ -102,22 +179,38 @@ export function SiteHeader() {
         const el = document.getElementById(hash)
         if (el) {
           el.scrollIntoView({ behavior: "smooth" })
-          window.history.pushState(null, "", href)
+          window.history.replaceState(null, "", href)
         }
       }
     }
     setOpen(false)
   }
 
+  // Ensure fresh loads always start at the Hero; only scroll if a deliberate hash was provided
   useEffect(() => {
-    if (typeof window !== "undefined" && window.location.hash) {
-      const hash = window.location.hash.replace("#", "")
-      const el = document.getElementById(hash)
-      if (el) {
-        const timer = setTimeout(() => {
-          el.scrollIntoView({ behavior: "smooth" })
-        }, 150)
-        return () => clearTimeout(timer)
+    if (typeof window === "undefined") return
+
+    // Prevent browser from restoring arbitrary scrolled position from previous visits
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual"
+    }
+
+    const rawHash = window.location.hash ? window.location.hash.replace("#", "") : ""
+
+    if (pathname === "/") {
+      if (!rawHash) {
+        // Fresh landing on home page without hash - stay firmly at top hero
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" })
+        setActiveSection("/")
+      } else {
+        // Explicit hash present
+        const el = document.getElementById(rawHash)
+        if (el) {
+          const timer = setTimeout(() => {
+            el.scrollIntoView({ behavior: "smooth" })
+          }, 150)
+          return () => clearTimeout(timer)
+        }
       }
     }
   }, [pathname])
@@ -144,8 +237,7 @@ export function SiteHeader() {
   return (
     <header
       className={cn(
-        "z-50 px-4 transition-all duration-300",
-        isHome ? "fixed top-0 inset-x-0" : "sticky top-0",
+        "fixed top-0 inset-x-0 z-50 px-4 transition-all duration-300",
         isGlassy ? "py-2.5 sm:py-3" : "pt-4 pb-2",
       )}
     >
@@ -162,7 +254,7 @@ export function SiteHeader() {
         <nav aria-label="Primary" className="glass hidden rounded-full p-1.5 xl:block">
           <ul className="flex items-center gap-1">
             {navLinks.map((l) => {
-              const active = isActive(pathname, l.href)
+              const active = isLinkActive(l.href, activeSection, pathname)
               return (
                 <li key={l.href}>
                   <Link
@@ -233,7 +325,7 @@ export function SiteHeader() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="glass relative mx-auto mt-2 max-w-7xl overflow-hidden rounded-3xl p-3 shadow-[0_12px_36px_rgba(0,0,0,0.12),inset_0_1.5px_1px_rgba(255,255,255,0.8),inset_0_-2px_4px_rgba(0,0,0,0.05)] dark:shadow-[0_16px_40px_rgba(0,0,0,0.5),inset_0_1.5px_1px_rgba(255,255,255,0.2),inset_0_-2px_6px_rgba(0,0,0,0.35)] xl:hidden max-md:dark:bg-[#0d0b28]/98 max-md:dark:backdrop-blur-2xl max-md:dark:border max-md:dark:border-white/15 max-md:dark:shadow-[0_24px_50px_rgba(0,0,0,0.9)]"
+            className="glass relative mx-auto mt-2 max-w-7xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-3xl p-3.5 shadow-2xl xl:hidden max-md:dark:bg-[#0d0b28]/98 max-md:dark:backdrop-blur-2xl max-md:dark:border max-md:dark:border-white/15 [scrollbar-width:thin]"
           >
             <div
               aria-hidden="true"
@@ -241,7 +333,7 @@ export function SiteHeader() {
             />
             <motion.ul className="flex flex-col gap-1">
               {navLinks.map((l) => {
-                const active = isActive(pathname, l.href)
+                const active = isLinkActive(l.href, activeSection, pathname)
                 return (
                   <motion.li key={l.href} variants={paperItemVariants}>
                     <Link
@@ -260,7 +352,7 @@ export function SiteHeader() {
                   </motion.li>
                 )
               })}
-              <motion.li variants={paperItemVariants} className="p-2 sm:hidden">
+              <motion.li variants={paperItemVariants} className="pt-2">
                 <CtaLink href="/contact" className="w-full">
                   Discuss Your Paper / Base Model
                 </CtaLink>

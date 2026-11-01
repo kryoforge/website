@@ -58,6 +58,7 @@ export function FeaturedWork() {
             <button
               key={cat}
               type="button"
+              aria-pressed={selectedCategory === cat}
               onClick={() => setSelectedCategory(cat)}
               className={cn(
                 "rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200",

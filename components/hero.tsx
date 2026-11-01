@@ -4,6 +4,7 @@ import { brand, heroStats } from "@/lib/data/profile"
 export function Hero() {
   return (
     <section
+      id="hero"
       className="relative flex flex-col justify-start md:justify-center md:min-h-[100dvh] overflow-hidden px-4 pt-24 pb-8 sm:pt-28 sm:pb-12"
       aria-labelledby="hero-title"
     >

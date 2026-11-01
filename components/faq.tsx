@@ -82,6 +82,7 @@ export function Faq() {
                         type="button"
                         onClick={() => toggle(globalIdx)}
                         aria-expanded={isOpen}
+                        aria-controls={`faq-answer-${globalIdx}`}
                         className="flex w-full cursor-pointer items-start gap-4 px-6 py-5 text-left transition-colors duration-200"
                       >
                         <span
@@ -111,6 +112,7 @@ export function Faq() {
                       <AnimatePresence initial={false}>
                         {isOpen && (
                           <motion.div
+                            id={`faq-answer-${globalIdx}`}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
@@ -147,6 +149,7 @@ export function Faq() {
                         type="button"
                         onClick={() => toggle(globalIdx)}
                         aria-expanded={isOpen}
+                        aria-controls={`faq-answer-${globalIdx}`}
                         className="flex w-full cursor-pointer items-start gap-4 px-6 py-5 text-left transition-colors duration-200"
                       >
                         <span
@@ -176,6 +179,7 @@ export function Faq() {
                       <AnimatePresence initial={false}>
                         {isOpen && (
                           <motion.div
+                            id={`faq-answer-${globalIdx}`}
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
