@@ -11,6 +11,7 @@ import { Testimonials } from "@/components/testimonials"
 import { WhyMe } from "@/components/why-me"
 import { faqs } from "@/lib/data/faq"
 import { brand } from "@/lib/data/profile"
+import { caseStudies } from "@/lib/data/projects"
 import { capabilities } from "@/lib/data/services"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://kryoforge.vercel.app"
@@ -19,24 +20,30 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": ["Organization", "ResearchOrganization"],
+      "@type": ["Organization", "ResearchOrganization", "ProfessionalService"],
       "@id": `${siteUrl}/#organization`,
       name: brand.fullName,
       alternateName: brand.name,
       url: siteUrl,
+      logo: `${siteUrl}/images/kryo-k-logo.png`,
+      image: `${siteUrl}/og-image.png`,
       description: brand.intro,
       email: brand.email,
-      areaServed: ["Global"],
+      sameAs: brand.github ? [brand.github] : [],
+      areaServed: ["Global", "United States", "United Kingdom", "Germany", "India", "Singapore", "Australia", "Canada"],
       availableLanguage: ["English"],
       knowsAbout: [
         "Network Simulation (NS-3, ns-3.46.1)",
         "NetAnim 3.109 Topology Visualization",
-        "RPL & 6LoWPAN Routing Protocols",
-        "Vehicular Ad-Hoc Networks (VANET, IEEE 802.11p)",
-        "Cyber-Security Threat & Attack Modeling (Sinkhole, DDoS)",
-        "Deep Learning & Spiking Neural Networks (SNN)",
-        "Variational Quantum Eigensolver (VQE)",
-        "300 DPI Publication Visualizations",
+        "RPL & 6LoWPAN Routing Protocols (RFC 6550, RFC 4944)",
+        "Vehicular Ad-Hoc Networks (VANET, IEEE 802.11p, WAVE)",
+        "Cyber-Security Threat & Attack Modeling (Sinkhole, DDoS, MAC Spoofing)",
+        "Zero-Trust Multi-Tier Cloud-Edge-End Architectures",
+        "Deep Learning & Spiking Neural Networks (SNN, Swin-Transformer)",
+        "Multi-Agent Deep Reinforcement Learning (MA-DRL)",
+        "Variational Quantum Eigensolver (VQE) Parameterized Circuits",
+        "FlowMonitor Performance Traces (PDR, Delay, Throughput, Energy)",
+        "300 DPI Publication Visualizations for IEEE, Elsevier & Springer",
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -61,6 +68,38 @@ const structuredData = {
         "@id": `${siteUrl}/#organization`,
       },
       inLanguage: "en-US",
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${siteUrl}/#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${siteUrl}/`,
+        },
+      ],
+    },
+    {
+      "@type": "ItemList",
+      "@id": `${siteUrl}/#case-studies`,
+      name: "Featured Research Simulation Case Studies",
+      description: "Verified academic simulations and benchmark architectures delivered with NetAnim topologies and 300 DPI figures.",
+      numberOfItems: caseStudies.length,
+      itemListElement: caseStudies.map((study, idx) => ({
+        "@type": "ListItem",
+        position: idx + 1,
+        item: {
+          "@type": "CreativeWork",
+          name: study.title,
+          headline: study.title,
+          description: study.summary,
+          genre: study.category,
+          keywords: study.techTags.join(", "),
+          citation: study.benchmark,
+        },
+      })),
     },
     {
       "@type": "FAQPage",

@@ -1,0 +1,38 @@
+# KryoForge Research Studio — Full Technical & Simulation Documentation
+
+## 1. Studio Identity & Overview
+- Name: KryoForge Research Studio
+- Role: Computational Research & Simulation Engineering Studio
+- Tagline: Advanced Network Simulations, Algorithmic Modeling & Research Engineering
+- Specialization: Translating mathematical models and theoretical papers into working NS-3 simulations, NetAnim visualizations, and IEEE/Springer publication figures.
+- Primary Engine: ns-3.46.1 (with CMake and `./ns3 run` execution wrappers)
+- Visualizer: NetAnim 3.109 XML topology trace generation
+- Data Pipeline: FlowMonitor XML to CSV extraction with Pandas/Matplotlib/Seaborn 300 DPI serif formatting
+
+## 2. Technical Stack (8-Domain Matrix)
+1. **Network Simulators**: NS-3 (ns-3.46.1 & legacy releases), NetAnim 3.109, FlowMonitor, Mobility & Traffic Generators (grid_gen.py, TCL traces).
+2. **Protocols & Layers**: RPL (RFC 6550), 6LoWPAN (RFC 4944), IPv6, ICMPv6 (DIO, DAO, DIS), IEEE 802.15.4, IEEE 802.11b/p (WAVE), Ad-Hoc Wi-Fi, UDP/TCP Sockets.
+3. **Security & Threat Models**: Sinkhole, Blackhole, DDoS Flooding, MAC Spoofing, Wireless Jamming, Cloud-Edge-End Zero-Trust, Risk-Adaptive ABE.
+4. **AI, ML & Quantum**: Multi-Agent Deep Reinforcement Learning (MA-DRL), Swin-Transformers, Spiking Neural Networks (SNN), Variational Quantum Eigensolver (VQE).
+5. **Languages**: C++ (Core NS-3, STL), Python 3 (PyTorch, Pandas, NumPy, Matplotlib, Seaborn), TCL, Bash/Shell Scripting.
+6. **Data & Visualization**: Automated 300 DPI serif-styled academic figures (Line, Area, Multi-Bar, Scatter Thresholds, ROC curves).
+7. **Metrics Engineered**: True Positive Rate (TPR / Detection Rate), False Positive Rate (FPR), False Negative Rate (FNR), Packet Delivery Ratio (PDR), End-to-End Delay, Throughput (Kbps/Mbps), Energy (Joules), Control Overhead.
+8. **Delivery & Documentation**: Clean README.md execution guides, CLI build wrappers (`./ns3 run`), annotated source code, CSV metric datasets.
+
+## 3. Four Core Pillars
+1. **100% Novelty & IP Protection**: We never resell custom algorithms or publish client source code. Once delivered, exact models remain strictly confidential.
+2. **Base-Paper vs. Proposed Benchmarking**: Proposed algorithm is benchmarked directly against 1–2 standard baseline protocols in the exact same environment to guarantee reviewer acceptance.
+3. **Publication-Ready Visuals (300 DPI)**: High-resolution serif-font figures formatted to drop directly into IEEE, Elsevier, or Springer LaTeX/Word templates.
+4. **Zero-Friction Reproducibility**: Deliverables include C++ source script, CSV metrics, NetAnim .xml traces, and a step-by-step terminal execution guide.
+
+## 4. Transparent Fixed-Price Packages
+- **Simulation Debug & Plot**: ₹2,999 / $49 / €45 (2–3 Days). Fix compilation/runtime bugs, extract FlowMonitor metrics to CSV, generate 4–6 300 DPI Python plots.
+- **Base Paper Implementation**: ₹6,999 – ₹12,000 / $99 – $160 / €90 – €150 (5–7 Days). Complete NS-3 C++ or Python simulation of standard published IEEE/Springer reference architecture, verified metrics, and 6–8 publication charts.
+- **Custom Novel Algorithm & Defense Schema**: ₹15,000 – ₹25,000+ / $220 – $350+ / €200 – €320+ (10–14 Days). Implementation of original proposed mathematical algorithm or defense mechanism, comparative benchmarking against 2 baseline protocols, 10–14 300 DPI plots, and NetAnim .xml animation.
+- **Milestone Structure**: 40% setup initiation, 30% interim terminal & graph verification preview, 30% final source code & NetAnim handover.
+
+## 5. Contact & Institutional Engagement
+- Email: contact.kryoforge@gmail.com
+- GitHub Organization: https://github.com/kryoforge
+- Website: https://kryoforge.vercel.app
+- Feasibility Review: Within 24 hours of base paper or metric formula submission.

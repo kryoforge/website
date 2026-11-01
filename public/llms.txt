@@ -1,0 +1,32 @@
+# KryoForge Research Studio
+
+> Advanced Network Simulations, Algorithmic Modeling & Research Engineering
+
+KryoForge is a computational research engineering and simulation studio specializing in NS-3 network simulations, deep learning architectures, and quantum algorithms for IEEE, Elsevier, and Springer academic workflows. The studio delivers verified benchmark metrics, NetAnim dynamic topology visualizers, and 300 DPI serif-styled publication-ready figures.
+
+## Core Capabilities
+- **NS-3 Network & Protocol Engineering**: Custom C++ protocol design for IoT (6LoWPAN, RPL), VANET (IEEE 802.11p/WAVE), and 5G cellular topologies. Full extraction of Packet Delivery Ratio (PDR), throughput, end-to-end latency, and energy consumption via FlowMonitor.
+- **Cyber-Security & Attack Modeling**: Multi-vector threat simulations (Sinkhole, DDoS, MAC spoofing, wireless jamming, Zero-Trust defense mechanisms with real-time node blacklisting).
+- **Deep Learning & Quantum Algorithms**: Hybrid Swin-Transformer Spiking Neural Networks (SNN) for medical image segmentation, Multi-Agent Deep Reinforcement Learning (MA-DRL), and Variational Quantum Eigensolver (VQE) parameterized circuits.
+- **Publication Analytics & 300 DPI Visualizations**: Automated Python pipelines (Pandas, Matplotlib, Seaborn) transforming raw simulation traces and FlowMonitor CSVs into serif-font publication plots.
+
+## Key Case Studies & Verified Metrics
+1. **SoS-RPL (IoT Sinkhole Defense)**: 97.80% Detection Rate (TPR), 88.50% PDR Restored, 3.50% FPR under ns-3.46.1.
+2. **EE-GTM-RPL (Mobile IoT Routing)**: 96.63% PDR, 0.9052s delay, 30% energy reduction over standard RPL across 50 mobile nodes.
+3. **Cloud-Edge-End Zero-Trust Security**: Multi-vector defense modeling simultaneous DDoS flooding, MAC spoofing, and wireless jamming.
+4. **VANET-DT-MARL (Vehicular Digital Twin)**: Realistic mobility traces (my_traffic.tcl) coupled with Multi-Agent DRL dynamic routing.
+5. **VANET Multi-OROF & Hybrid DPC**: Dual-protocol evaluation under varying vehicle traffic densities.
+6. **Risk-Adaptive ABE & IoT DDoS**: Lightweight encryption overhead alongside high-rate DDoS filtering and throughput recovery.
+7. **Swin-Transformer Spiking Neural Network (Swin-SNN)**: High Dice similarity with low-compute spiking layers for MRI brain segmentation.
+8. **Variational Quantum Eigensolver (VQE)**: Molecular ground-state energy convergence benchmark.
+
+## Research Standards & Reproducibility
+- **100% Confidentiality & Zero Code Leaks**: Custom algorithm formulations and client proposal files (.cc / .docx) are strictly confidential and never resold.
+- **Base-Paper Comparative Benchmarking**: Every proposed model is benchmarked against 1–2 baseline protocols in the exact same topology.
+- **Zero-Friction Reproducibility**: Delivery includes annotated C++ / Python source code, CSV logs, NetAnim .xml traces, and a step-by-step CLI build guide (`./ns3 run`).
+
+## Contact & Links
+- Website: https://kryoforge.vercel.app
+- Contact Email: contact.kryoforge@gmail.com
+- GitHub Organization: https://github.com/kryoforge
+- Full Documentation: https://kryoforge.vercel.app/llms-full.txt

@@ -14,22 +14,65 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/contact",
   },
+  openGraph: {
+    title: "Contact KryoForge Research Studio | Simulation & Algorithm Engineering",
+    description:
+      "Discuss your research paper, NS-3 simulation models, or target journal benchmarks with KryoForge. 24-hour feasibility review.",
+    url: `${siteUrl}/contact`,
+    type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Contact KryoForge Research Studio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact KryoForge Research Studio",
+    description: "Discuss your research paper, NS-3 simulation models, or target journal benchmarks.",
+    images: ["/og-image.png"],
+  },
 }
 
 const contactSchema = {
   "@context": "https://schema.org",
-  "@type": "ContactPage",
-  "@id": `${siteUrl}/contact#webpage`,
-  url: `${siteUrl}/contact`,
-  name: "Contact KryoForge Research Studio",
-  description:
-    "Discuss your research paper, NS-3 simulation models, or target journal benchmarks with KryoForge.",
-  mainEntity: {
-    "@type": "Organization",
-    name: brand.fullName,
-    email: brand.email,
-    url: siteUrl,
-  },
+  "@graph": [
+    {
+      "@type": "ContactPage",
+      "@id": `${siteUrl}/contact#webpage`,
+      url: `${siteUrl}/contact`,
+      name: "Contact KryoForge Research Studio",
+      description:
+        "Discuss your research paper, NS-3 simulation models, or target journal benchmarks with KryoForge.",
+      mainEntity: {
+        "@type": "Organization",
+        name: brand.fullName,
+        email: brand.email,
+        url: siteUrl,
+      },
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${siteUrl}/contact#breadcrumb`,
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "Home",
+          item: `${siteUrl}/`,
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "Contact",
+          item: `${siteUrl}/contact`,
+        },
+      ],
+    },
+  ],
 }
 
 function GithubIcon({ className }: { className?: string }) {

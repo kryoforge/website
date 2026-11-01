@@ -64,6 +64,7 @@ export const metadata: Metadata = {
     shortcut: "/images/kryo-k-logo.png",
     apple: "/images/icon-192.png",
   },
+  manifest: "/manifest.webmanifest",
   openGraph: {
     title: `${brand.fullName} | ${brand.tagline}`,
     description:
@@ -73,6 +74,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     siteName: brand.fullName,
     images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${brand.fullName} — Research Simulation Studio`,
+      },
       {
         url: "/images/kryo-k-logo.png",
         width: 800,
@@ -86,14 +93,61 @@ export const metadata: Metadata = {
     title: `${brand.fullName} | ${brand.tagline}`,
     description:
       "Turning complex research models into publishable simulation results. Custom NS-3 network engineering, quantum algorithms, and 300 DPI publication-ready figures.",
-    images: ["/images/kryo-k-logo.png"],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
   category: "research",
   classification: "Computational Research & Simulation Studio",
+  other: {
+    "geo.region": "Global",
+    "geo.placename": "Worldwide Remote Research Lab",
+    "distribution": "global",
+    "rating": "general",
+    "referrer": "origin-when-cross-origin",
+    "ai-content-declaration": "Human-engineered computational research & simulation studio",
+  },
+}
+
+const rootSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "ResearchOrganization", "ProfessionalService"],
+      "@id": `${siteUrl}/#organization`,
+      name: brand.fullName,
+      alternateName: brand.name,
+      url: siteUrl,
+      logo: `${siteUrl}/images/kryo-k-logo.png`,
+      image: `${siteUrl}/og-image.png`,
+      description: brand.intro,
+      email: brand.email,
+      sameAs: brand.github ? [brand.github] : [],
+      areaServed: ["Global", "United States", "United Kingdom", "Germany", "India", "Singapore", "Australia", "Canada"],
+      availableLanguage: ["English"],
+      priceRange: "$$",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: brand.fullName,
+      description: brand.tagline,
+      publisher: {
+        "@id": `${siteUrl}/#organization`,
+      },
+      inLanguage: "en-US",
+    },
+  ],
 }
 
 export const viewport: Viewport = {
@@ -108,6 +162,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning className={`${jakarta.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rootSchema) }}
+        />
+      </head>
       <body suppressHydrationWarning>
         <Providers>
           <StudioBackground />
