@@ -3,6 +3,11 @@ import type { FaqItem } from "./types"
 export const faqs: FaqItem[] = [
   {
     category: "ip",
+    q: "Why don't you display public client reviews or scholar names?",
+    a: "Top-tier academic journals (IEEE, Springer, Elsevier) enforce strict double-blind peer review and novelty protection. Having delivered 10+ custom research projects, our clients' identities, manuscript drafts, and algorithm formulations remain 100% confidential. We operate under strict NDAs and never publish client names or unreleased papers as marketing material.",
+  },
+  {
+    category: "ip",
     q: "Will you ever publish or resell my custom algorithm?",
     a: "Never. Every custom research implementation is strictly confidential. We only display anonymized metric capabilities on our portfolio and never upload client source code to public repositories. You retain 100% intellectual property ownership of your models, formulas, and parameters.",
   },

@@ -1,37 +1,45 @@
-import type { ResearcherOutcome } from "./types"
+export interface ConfidentialityPillar {
+  id: string
+  title: string
+  badge: string
+  heading: string
+  description: string
+  detail: string
+  icon: "check" | "shield" | "lock" | "refresh"
+}
 
-export const researcherOutcomes: ResearcherOutcome[] = [
+export const confidentialityPillars: ConfidentialityPillar[] = [
   {
-    id: "outcome-1",
-    title: "IoT Security Scholar",
-    quote:
-      "We needed our mathematical rank-threshold formulas translated into a working NS-3 simulation with a clear comparison against standard RPL. KryoForge delivered the complete C++ implementation, CSV logs, and 6 publication-ready charts ahead of our submission deadline.",
-    badge: "97.8% Detection Accuracy Achieved",
-    author: "PhD Research Scholar",
-    role: "IoT Security & RPL Routing Lead",
-    initials: "IS",
-    rating: 5,
+    id: "track-record",
+    title: "10+ Research Implementations",
+    badge: "10+ Projects Delivered",
+    heading: "Custom Simulation & Protocol Engineering",
+    description:
+      "Successfully delivered custom NS-3 C++ routing protocols, NetAnim topologies, Deep Reinforcement Learning pipelines, and quantum circuits across 10+ academic and industry research projects.",
+    detail: "100% custom C++ & Python code handed over with step-by-step CLI execution guides.",
+    icon: "check",
   },
   {
-    id: "outcome-2",
-    title: "Mobile LLN Researcher",
-    quote:
-      "Getting mobile nodes to work with game-theoretic parent selection in NS-3 was blocking our paper for months. The delivered code compiled cleanly on ns-3.46.1 and proved a 30% energy reduction over baseline RPL.",
-    badge: "3 Protocols Benchmarked",
-    author: "Wireless Networks Researcher",
-    role: "Low-Power & Lossy Networks Lab",
-    initials: "ML",
-    rating: 5,
+    id: "strict-nda",
+    title: "100% Double-Blind & NDA Compliance",
+    badge: "Zero Public Disclosures",
+    heading: "Why We Do Not Display Public Reviews",
+    description:
+      "Academic submissions to IEEE Transactions, Springer, and Elsevier strictly enforce double-blind peer review. We never publish client names, paper drafts, or reviewer comments to protect author anonymity.",
+    detail: "Strict Non-Disclosure Agreement (NDA) signed upon request. Zero code leaks or public disclosure.",
+    icon: "shield",
   },
   {
-    id: "outcome-3",
-    title: "Vehicular AI Lead",
-    quote:
-      "Integrating multi-agent reinforcement learning metrics with realistic VANET traffic traces required someone who understood both C++ networking and Python data pipelines. The execution was flawless.",
-    badge: "End-to-End Simulation & Plotting",
-    author: "Academic Research Lead",
-    role: "Intelligent Transportation Systems Group",
-    initials: "VA",
-    rating: 5,
+    id: "revision-support",
+    title: "Reviewer-Proof Revision Support",
+    badge: "Journal Review Backing",
+    heading: "Post-Submission Benchmark Revisions",
+    description:
+      "When journal peer reviewers request additional parameter sweeps, higher node densities, or comparisons against newer baseline protocols, we update your simulation code and generate new 300 DPI plots directly.",
+    detail: "Continuous technical backing through minor and major review rounds until camera-ready acceptance.",
+    icon: "refresh",
   },
 ]
+
+// Deprecated: Retained as empty for backward compatibility
+export const researcherOutcomes = []

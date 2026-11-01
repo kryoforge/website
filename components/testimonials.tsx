@@ -1,37 +1,52 @@
 "use client"
 
-import { CheckCircle2, Quote, Star } from "lucide-react"
+import { CheckCircle2, Lock, RefreshCw, ShieldCheck } from "lucide-react"
 import { motion } from "motion/react"
 import { CtaLink } from "@/components/cta-button"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
-import { researcherOutcomes } from "@/lib/data/testimonials"
+import { confidentialityPillars } from "@/lib/data/testimonials"
 import { cn } from "@/lib/utils"
 
 export function Testimonials() {
   return (
-    <section id="outcomes" aria-labelledby="testimonials-title" className="scroll-mt-24 sm:scroll-mt-28 px-4">
+    <section id="confidentiality" aria-labelledby="confidentiality-title" className="scroll-mt-24 sm:scroll-mt-28 px-4">
       <div className="mx-auto max-w-7xl">
         <SectionHeading
-          eyebrow="Researcher Outcomes"
+          eyebrow="Client Privacy & Track Record"
           title={
             <>
-              Anonymized <span className="text-gradient">Peer-Reviewed Milestones</span>
+              10+ Projects Delivered Under <span className="text-gradient">Strict Non-Disclosure</span>
             </>
           }
-          description="Verified outcomes from PhD scholars, university faculty, and lead researchers who relied on KryoForge to execute high-stakes simulations."
+          description="We do not publish public reviews, scholar names, or draft manuscripts. Top-tier academic research demands 100% discretion—our clients' algorithms, paper titles, and institutional affiliations remain strictly private."
           action={
             <CtaLink href="/contact" variant="glass">
-              Discuss Your Manuscript
+              Discuss Your Paper Under NDA
             </CtaLink>
           }
         />
 
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-          {researcherOutcomes.map((t, i) => (
+        {/* NDA & Double-Blind Policy Banner */}
+        <Reveal delay={0.08} className="mt-8">
+          <div className="rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5 dark:border-primary/30 dark:bg-primary/[0.08]">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3.5">
+              <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary dark:bg-primary/20 dark:text-violet-300">
+                <Lock className="size-4.5" />
+              </div>
+              <p className="text-xs sm:text-sm leading-relaxed text-foreground/80">
+                <strong className="font-semibold text-slate-900 dark:text-white">Zero Public Reviews Policy:</strong> Top-tier IEEE Transactions, Elsevier, and Springer journals enforce double-blind peer review and strict novelty protection. To safeguard our clients&apos; academic standing and priority of discovery, we never publish client quotes or proprietary manuscript details.
+              </p>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* 3 Pillar Cards */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          {confidentialityPillars.map((p, i) => (
             <Reveal
-              key={t.id}
-              delay={i * 0.1}
+              key={p.id}
+              delay={0.12 + i * 0.08}
               className={cn(
                 "h-full flex flex-col",
                 i === 2 ? "md:max-lg:col-span-2 md:max-lg:max-w-xl md:max-lg:mx-auto md:max-lg:w-full" : "",
@@ -43,55 +58,39 @@ export function Testimonials() {
                 className="glass relative flex h-full flex-col justify-between rounded-[1.75rem] sm:rounded-[2rem] p-6 lg:p-7 shadow-sm transition-all duration-300 hover:shadow-xl dark:border-white/10 dark:bg-slate-900/40"
               >
                 <div className="flex-1 flex flex-col">
-                  {/* Rating & Verified Scholar Badge */}
-                  <div className="flex flex-wrap items-center justify-between gap-2.5">
-                    <div
-                      role="img"
-                      className="flex items-center gap-1 text-amber-400 shrink-0"
-                      aria-label={`${t.rating} out of 5 stars`}
-                    >
-                      {Array.from({ length: t.rating }).map((_, starIdx) => (
-                        <Star key={starIdx} className="size-4 fill-current" />
-                      ))}
-                    </div>
-                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-600 dark:border-emerald-400/20 dark:bg-emerald-500/15 dark:text-emerald-400">
-                      <CheckCircle2 aria-hidden="true" className="size-3.5 shrink-0" />
-                      <span>Verified Research</span>
+                  {/* Top Badge & Icon */}
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 font-mono text-xs font-semibold text-primary dark:border-primary/30 dark:bg-primary/10 dark:text-violet-300">
+                      {p.badge}
                     </span>
+                    <div className="flex size-9 shrink-0 items-center justify-center rounded-xl bg-foreground/5 text-foreground/70">
+                      {p.icon === "check" && <CheckCircle2 className="size-4 text-emerald-500" />}
+                      {p.icon === "shield" && <ShieldCheck className="size-4 text-primary dark:text-violet-400" />}
+                      {p.icon === "refresh" && <RefreshCw className="size-4 text-cyan-500" />}
+                    </div>
                   </div>
 
-                  {/* Quote */}
-                  <div className="relative mt-5 flex-1">
-                    <Quote
-                      aria-hidden="true"
-                      className="pointer-events-none absolute -left-2 -top-2 size-8 text-primary/15 dark:text-violet-400/15"
-                    />
-                    <p className="relative z-10 text-pretty text-sm sm:text-[15px] leading-relaxed text-foreground/90">
-                      &ldquo;{t.quote}&rdquo;
+                  {/* Title & Heading */}
+                  <div className="mt-5">
+                    <h3 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                      {p.title}
+                    </h3>
+                    <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                      {p.heading}
                     </p>
                   </div>
+
+                  {/* Description */}
+                  <p className="mt-4 text-sm leading-relaxed text-foreground/80">
+                    {p.description}
+                  </p>
                 </div>
 
-                {/* Bottom Meta */}
-                <div className="mt-6 border-t border-border/80 pt-5 dark:border-white/10">
-                  <div className="mb-4">
-                    <span className="inline-flex max-w-full items-center truncate rounded-xl border border-primary/20 bg-primary/5 px-3 py-1 font-mono text-xs font-semibold text-primary dark:border-primary/30 dark:bg-primary/10 dark:text-violet-300">
-                      {t.badge}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2563eb] to-[#7c3aed] font-mono text-xs font-bold text-white shadow-md">
-                      {t.initials}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-bold text-slate-900 dark:text-white">
-                        {t.title}
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground" title={`${t.author} · ${t.role}`}>
-                        {t.author} · {t.role}
-                      </p>
-                    </div>
+                {/* Bottom Assurance */}
+                <div className="mt-6 border-t border-border/80 pt-4 dark:border-white/10">
+                  <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                    <CheckCircle2 className="mt-0.5 size-3.5 shrink-0 text-emerald-500" />
+                    <span className="leading-snug">{p.detail}</span>
                   </div>
                 </div>
               </motion.article>

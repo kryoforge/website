@@ -33,5 +33,5 @@ export const heroStats = [
   { value: "ns-3.46.1", label: "Sim Engine", note: "CMake ./ns3 wrapper verified" },
   { value: "300 DPI", label: "Academic Figures", note: "Serif-styled IEEE / Springer charts" },
   { value: "100%", label: "IP Confidentiality", note: "Strict non-disclosure & zero leaks" },
-  { value: "5.0", label: "Scholar Satisfaction", note: "Peer-reviewed research delivery" },
+  { value: "10+", label: "Research Projects", note: "Delivered under strict NDA" },
 ]

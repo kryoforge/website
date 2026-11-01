@@ -201,7 +201,7 @@ export default function AboutPage() {
         {/* Comparative Advantage */}
         <WhyMe />
 
-        {/* Scholar Testimonials */}
+        {/* Client Privacy & Track Record */}
         <Testimonials />
 
         {/* Final CTA Band */}
