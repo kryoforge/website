@@ -22,13 +22,11 @@ export const brand = {
   ],
 }
 
-export const navLinks: Array<{ href: string; label: string; shortLabel?: string }> = [
+export const navLinks: Array<{ href: string; label: string }> = [
   { href: "/", label: "Home" },
-  { href: "/#portfolio", label: "Research Portfolio", shortLabel: "Portfolio" },
   { href: "/#capabilities", label: "Capabilities" },
-  { href: "/#methodology", label: "Methodology" },
+  { href: "/#portfolio", label: "Portfolio" },
   { href: "/#pricing", label: "Pricing" },
-  { href: "/#faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
 ]
 

@@ -5,7 +5,7 @@ import { ArrowRight, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { CtaLink } from "@/components/cta-button"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { brand, navLinks } from "@/lib/data/profile"
@@ -100,6 +100,8 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [activeSection, setActiveSection] = useState<string>("")
+  const isClickScrolling = useRef(false)
+  const clickScrollTimer = useRef<NodeJS.Timeout | null>(null)
 
   const isHome = pathname === "/"
 
@@ -107,7 +109,15 @@ export function SiteHeader() {
     setOpen(false)
   }, [pathname])
 
-  // Scroll spy to sync active section on desktop and mobile
+  useEffect(() => {
+    return () => {
+      if (clickScrollTimer.current) {
+        clearTimeout(clickScrollTimer.current)
+      }
+    }
+  }, [])
+
+  // Scroll spy to sync active section on desktop and mobile in exact DOM order
   useEffect(() => {
     if (pathname === "/contact") {
       setActiveSection("/contact")
@@ -119,56 +129,73 @@ export function SiteHeader() {
       return
     }
 
-    const sectionIds = ["portfolio", "capabilities", "methodology", "pricing", "faq"]
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null)
+    // The core section destinations represented in the navbar
+    const orderedSectionIds = ["capabilities", "portfolio", "pricing"]
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (window.scrollY < 200) {
-          setActiveSection("/")
-          return
-        }
-        const visible = entries.filter((e) => e.isIntersecting)
-        if (visible.length > 0) {
-          const best = visible.reduce((prev, curr) =>
-            curr.intersectionRatio > prev.intersectionRatio ? curr : prev,
-          )
-          setActiveSection(`/#${best.target.id}`)
-        } else if (window.scrollY < 200) {
-          setActiveSection("/")
-        }
-      },
-      {
-        rootMargin: "-90px 0px -40% 0px",
-        threshold: [0, 0.25, 0.5, 0.75],
-      },
-    )
+    const computeActiveSection = () => {
+      if (isClickScrolling.current) return
 
-    sections.forEach((sec) => observer.observe(sec))
+      const scrollY = window.scrollY
 
-    const handleScrollTop = () => {
-      if (window.scrollY < 200) {
+      // If at or near the top hero, always keep Home active
+      if (scrollY < 180) {
         setActiveSection("/")
+        return
+      }
+
+      // Target reference line: 150px from top of viewport (below fixed navbar with comfortable offset)
+      const targetLine = 150
+      let active = "/"
+
+      for (const id of orderedSectionIds) {
+        const el = document.getElementById(id)
+        if (!el) continue
+        const rect = el.getBoundingClientRect()
+        // If section top has scrolled past or reached the target line, it is the active section
+        if (rect.top <= targetLine) {
+          active = `/#${id}`
+        }
+      }
+
+      setActiveSection(active)
+    }
+
+    let ticking = false
+    const onScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          computeActiveSection()
+          ticking = false
+        })
+        ticking = true
       }
     }
-    window.addEventListener("scroll", handleScrollTop, { passive: true })
+
+    // Run on initial mount
+    computeActiveSection()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    window.addEventListener("resize", onScroll, { passive: true })
 
     return () => {
-      sections.forEach((sec) => observer.unobserve(sec))
-      window.removeEventListener("scroll", handleScrollTop)
+      window.removeEventListener("scroll", onScroll)
+      window.removeEventListener("resize", onScroll)
     }
   }, [pathname])
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     if (href === "/" && pathname === "/") {
       e.preventDefault()
+      setActiveSection("/")
+      isClickScrolling.current = true
+      if (clickScrollTimer.current) clearTimeout(clickScrollTimer.current)
+      clickScrollTimer.current = setTimeout(() => {
+        isClickScrolling.current = false
+      }, 850)
+
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" })
       if (window.location.hash) {
         window.history.replaceState(null, "", "/")
       }
-      setActiveSection("/")
     } else if (href.includes("#")) {
       const [targetPath, hash] = href.split("#")
       const currentPathNormalized = pathname === "" ? "/" : pathname
@@ -178,6 +205,14 @@ export function SiteHeader() {
         e.preventDefault()
         const el = document.getElementById(hash)
         if (el) {
+          // Immediately set the active section so the tab pill highlights the clicked section without flicker or lag
+          setActiveSection(href)
+          isClickScrolling.current = true
+          if (clickScrollTimer.current) clearTimeout(clickScrollTimer.current)
+          clickScrollTimer.current = setTimeout(() => {
+            isClickScrolling.current = false
+          }, 850)
+
           el.scrollIntoView({ behavior: "smooth" })
           window.history.replaceState(null, "", href)
         }
@@ -206,6 +241,7 @@ export function SiteHeader() {
         // Explicit hash present
         const el = document.getElementById(rawHash)
         if (el) {
+          setActiveSection(`/#${rawHash}`)
           const timer = setTimeout(() => {
             el.scrollIntoView({ behavior: "smooth" })
           }, 150)
@@ -251,7 +287,7 @@ export function SiteHeader() {
       >
         <Brand />
 
-        <nav aria-label="Primary" className="glass hidden rounded-full p-1.5 xl:block">
+        <nav aria-label="Primary" className="glass hidden rounded-full p-1.5 md:block">
           <ul className="flex items-center gap-1">
             {navLinks.map((l) => {
               const active = isLinkActive(l.href, activeSection, pathname)
@@ -262,7 +298,7 @@ export function SiteHeader() {
                     aria-current={active ? "page" : undefined}
                     onClick={(e) => handleNavClick(e, l.href)}
                     className={cn(
-                      "relative block rounded-full px-3.5 py-2 text-sm font-semibold transition-all duration-200 2xl:px-4.5 whitespace-nowrap",
+                      "relative block rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 lg:px-5 whitespace-nowrap",
                       !active && "hover:bg-foreground/[0.06] hover:text-foreground text-foreground/75 active:scale-95",
                     )}
                   >
@@ -274,14 +310,7 @@ export function SiteHeader() {
                       />
                     )}
                     <span className={cn("relative z-10 transition-colors duration-200", active ? "text-white" : "")}>
-                      {l.shortLabel ? (
-                        <>
-                          <span className="hidden 2xl:inline">{l.label}</span>
-                          <span className="2xl:hidden">{l.shortLabel}</span>
-                        </>
-                      ) : (
-                        l.label
-                      )}
+                      {l.label}
                     </span>
                   </Link>
                 </li>
@@ -305,7 +334,7 @@ export function SiteHeader() {
 
           <button
             type="button"
-            className="btn btn-glass size-11 xl:hidden max-md:dark:bg-[#15113d]/90 max-md:dark:border-white/20 max-md:dark:text-white max-md:dark:shadow-[0_4px_16px_rgba(0,0,0,0.5)]"
+            className="btn btn-glass size-11 md:hidden max-md:dark:bg-[#15113d]/90 max-md:dark:border-white/20 max-md:dark:text-white max-md:dark:shadow-[0_4px_16px_rgba(0,0,0,0.5)]"
             aria-expanded={open}
             aria-controls="mobile-menu"
             aria-label={open ? "Close menu" : "Open menu"}
@@ -325,7 +354,7 @@ export function SiteHeader() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className="glass relative mx-auto mt-2 max-w-7xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-3xl p-3.5 shadow-2xl xl:hidden max-md:dark:bg-[#0d0b28]/98 max-md:dark:backdrop-blur-2xl max-md:dark:border max-md:dark:border-white/15 [scrollbar-width:thin]"
+            className="glass relative mx-auto mt-2 max-w-7xl max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-3xl p-3.5 shadow-2xl md:hidden max-md:dark:bg-[#0d0b28]/98 max-md:dark:backdrop-blur-2xl max-md:dark:border max-md:dark:border-white/15 [scrollbar-width:thin]"
           >
             <div
               aria-hidden="true"

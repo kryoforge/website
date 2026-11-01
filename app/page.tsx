@@ -131,8 +131,8 @@ export default function HomePage() {
         <SkillsGrid />
         <WhyMe />
         <Testimonials />
-        <Pricing />
         <HowWeWork />
+        <Pricing />
         <Faq />
         <CtaBand />
       </div>
